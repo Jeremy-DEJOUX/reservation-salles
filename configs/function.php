@@ -98,26 +98,28 @@
 
 
   // ======================================CHANGEMENT PROFIL============================================
-  function Profil($bdd, $user_name, $password, $confirm_password){
+  function Profil($bdd, $login, $password, $confirm_password){
   $error = null;
-  $user_name = mysqli_escape_string($bdd, htmlspecialchars(trim($user_name)));
-  $password = mysqli_escape_string($bdd, htmlspecialchars(trim($password)));
-  $confirm_password = mysqli_escape_string($bdd, htmlspecialchars(trim($confirm_password)));
 
-  if (!empty($user_name) AND !empty($password) AND !empty($confirm_password)) {
+  if (!empty($login) AND !empty($password) AND !empty($confirm_password)) {
 
-      $user_name_len = strlen($user_name);
-      if ($user_name_len <= 255) {
-          $query = mysqli_query($bdd, "SELECT id FROM utilisateurs WHERE login = '$user_name'");
-          $count = mysqli_num_rows($query);
+      $login_len = strlen($login);
+      if ($login_len <= 255) {
+          $query = $bdd->prepare("SELECT id FROM utilisateurs WHERE login = :login");
+          $query->execute(array(
+            ':login' => $login
+          ));
 
           if (!$count) {
 
             if ($password = $confirm_password) {
               $crypted_password = password_hash($password, PASSWORD_BCRYPT);
               $mon_id = $_SESSION['id'];
-              $insert = mysqli_query($bdd, "UPDATE utilisateurs SET login = '$user_name', password = '$crypted_password' WHERE id = '$mon_id'");
-
+              $insert = $bdd->prepare("UPDATE utilisateurs SET login = :login, password = :crypted_password WHERE id = '$mon_id'");
+              $insert->execute(array(
+                ':login' => $login,
+                ':crypted_password' => $crypted_password,
+              ));
               if ($insert) {
                 header("Location: profil.php?id=".$_SESSION['id']);
               }
@@ -141,6 +143,29 @@
         $error = "Tous les champs doivent être remplis";
       }
   return $error;
+
+  }
+
+  function Jour($day = null, $month = null, $year = null){
+    $error = null;
+    if ($day === null) {
+      $day = date("l d ");
+      echo $day;
+    }
+
+    if ($month === null) {
+      $month = date("F ");
+      echo $month;
+    }
+
+    if ($year === null) {
+      $year = date("Y ");
+      echo $year;
+    }
+    if ($day < 1 || $day > 7) {
+      $error = "le jour ne correspond à aucune date";
+    }
+
 
   }
 ?>
