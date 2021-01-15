@@ -7,7 +7,6 @@ class User
   private $password;
 
   public function __construct(){
-    
   }
 
   public function register($login, $password, $confirm_password){
@@ -33,9 +32,8 @@ class User
           ));
 
           if ($insert) {
-            $this->login = $login;
-            $this->password = $crypted_password;
-
+            // $this->login = $login;
+            // $this->password = $crypted_password;
             header('Location: ../pages/connexion.php');
           }
         }
@@ -72,13 +70,20 @@ class User
         }
       }
     }
+    $_SESSION['id'] = $this->id;
+    $_SESSION['login'] = $this->login;
+    $_SESSION['password'] = $this->password;
   }
 
   public function disconnect(){
     unset($this->id, $this->login, $this->password);
   }
 
-
+/**
+ * [update description]
+ * @param  [type] $login    [description]
+ * @param  [type] $password [description]
+ */
   public function update($login, $password){
     $bdd = new PDO('mysql:host=localhost;dbname=classes;charset=utf8', 'root', '');
 
@@ -109,10 +114,9 @@ class User
       return true;
     }
     else {
-      echo "Pas d'utilisateur connecté";
+      return false;
     }
   }
-
 }
 
 ?>

@@ -1,13 +1,14 @@
 <?php
-  require_once("../src/Classes/User
-  .php");
+  // require_once("../src/Classes/User.php");
+  require_once("../src/config.php");
 
   $path_index = "../index.php";
   $path_inscription = "inscription.php";
   $path_connexion = "connexion.php";
 
   if (isset($_POST['submit'])) {
-    $error = connexion($_POST['login_user'], $_POST['password_user'], $bdd);
+    $user = new User();
+    $user->connexion($_POST['login_user'], $_POST['password_user']);
   }
 ?>
 

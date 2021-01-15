@@ -1,4 +1,5 @@
 <?php
+require_once('src/config.php');
 $path_index = "index.php";
 $path_inscription = "pages/inscription.php";
 $path_connexion = "pages/connexion.php";

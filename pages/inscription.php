@@ -1,12 +1,13 @@
 <?php
-  require_once('../src/Classes/User.php');
+  // require_once('../src/Classes/User.php');
+  require_once('../src/config.php');
   $path_index = "../index.php";
   $path_inscription = "inscription.php";
   $path_connexion = "connexion.php";
 
-  if (isset($_POST['submit'])) {
-    $user = new User();
-    $user->register($_POST['login_user'], $_POST['password_user'], $_POST['confirmpassword']);
+  if (isset($_POST['submit'])) {  
+
+    $_SESSION['user']->register($_POST['login_user'], $_POST['password_user'], $_POST['confirmpassword']);
   }
 ?>
 

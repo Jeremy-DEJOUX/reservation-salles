@@ -1,5 +1,5 @@
 <?php
-require_once('../configs/config.php');
+require_once('../src/config.php');
 
 $path_index = "../index.php";
 $path_inscription = "inscription.php";
@@ -9,11 +9,14 @@ $path_planning = "planning.php";
 $path_reservation = "reservation.php";
 $path_profil = "profl.php";
 
-if (isset($_SESSION['id'])) {
+
 
   if (isset($_POST['new_submit'])) {
     $error = Profil($bdd, $_POST['new_login'], $_POST['new_password'], $_POST['confirm_new_password']);
   }
+
+
+
 
 ?>
 
@@ -39,7 +42,7 @@ if (isset($_SESSION['id'])) {
       <section class="flex a_center column j_around">
         <h1>Profil de <?php echo $_SESSION['login']; ?></h1> <br />
 
-        <h3>Login = <?php echo $_SESSION['login'];; ?></h3> <br />
+        <h3>Login = <?php echo $_SESSION['login']; ?></h3> <br />
         <?php if (isset($error)) { echo "<h2>$error</h2>"; }?>
 
         <a href="deconnexion.php">Se Déconnecter</a>
@@ -72,5 +75,3 @@ if (isset($_SESSION['id'])) {
 
 </body>
 </html>
-
-<?php } ?>

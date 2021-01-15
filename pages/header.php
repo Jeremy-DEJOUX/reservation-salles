@@ -1,5 +1,7 @@
 <!-- ====================CONNECTED==================== -->
-<?php if (isset($_SESSION['id'])) {
+<?php
+  $connected = $user->isConnected();
+  if ($connected) {
 ?>
 <header>
   <nav>
