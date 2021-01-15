@@ -1,6 +1,6 @@
 <?php
 require_once('../src/config.php');
-$user->disconnect();
+$_SESSION['user']->disconnect();
 session_destroy();
 header('Location: connexion.php');
 

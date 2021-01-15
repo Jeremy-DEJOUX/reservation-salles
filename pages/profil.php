@@ -12,7 +12,7 @@ $path_profil = "profl.php";
 
 
   if (isset($_POST['new_submit'])) {
-    $error = Profil($bdd, $_POST['new_login'], $_POST['new_password'], $_POST['confirm_new_password']);
+    $_SESSION['user']->update($_POST['new_login'], $_POST['new_password'], $_POST['confirm_new_password']);
   }
 
 
@@ -43,7 +43,7 @@ $path_profil = "profl.php";
         <h1>Profil de <?php echo $_SESSION['login']; ?></h1> <br />
 
         <h3>Login = <?php echo $_SESSION['login']; ?></h3> <br />
-        <?php if (isset($error)) { echo "<h2>$error</h2>"; }?>
+        <?php if (isset($_SESSION['error'])) { echo "<h2>".$_SESSION['error']."</h2>"; }?>
 
         <a href="deconnexion.php">Se Déconnecter</a>
       </section>

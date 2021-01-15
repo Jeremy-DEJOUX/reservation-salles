@@ -1,6 +1,6 @@
 <!-- ====================CONNECTED==================== -->
 <?php
-  $connected = $user->isConnected();
+  $connected = $_SESSION['user']->isConnected();
   if ($connected) {
 ?>
 <header>

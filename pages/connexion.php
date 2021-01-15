@@ -7,8 +7,7 @@
   $path_connexion = "connexion.php";
 
   if (isset($_POST['submit'])) {
-    $user = new User();
-    $user->connexion($_POST['login_user'], $_POST['password_user']);
+    $_SESSION['user']->connexion($_POST['login_user'], $_POST['password_user']);
   }
 ?>
 
@@ -35,7 +34,7 @@
 <!-- =======================================MAIN=============================================== -->
     <main class="flex a_center column j_around" id="main_connexion">
         <h1>Connexion</h1>
-        <?php if (isset($error)) { echo "<h2>$error</h2>"; }?>
+        <?php if (isset($_SESSION['error'])) { echo "<h2>".$_SESSION['error']."</h2>"; }?>
 
 
         <form action="connexion.php" method="post" id="connexion_formulaire" class="flex a_center column j_around">
