@@ -9,6 +9,10 @@ class User
   public function __construct(){
   }
 
+
+
+
+// =======================================INSCRIPTION============================================================
   public function register($login, $password, $confirm_password){
     $bdd = new PDO('mysql:host=localhost;dbname=reservationsalles;charset=utf8', 'root', '');
     $error = null;
@@ -42,6 +46,8 @@ class User
   }
 
 
+
+// ==================================================================CONNEXION=========================================================
   public function connexion($login, $password){
     $bdd = new PDO('mysql:host=localhost;dbname=reservationsalles;charset=utf8', 'root', '');
     $error = null;
@@ -65,7 +71,7 @@ class User
             $this->login = $login;
             $this->password = $donnees['password'];
             header('Location: ../pages/profil.php');
-          }
+          }          
           else {
             $error = "Ce n'est pas le bon mot de passe";
           }
@@ -79,11 +85,15 @@ class User
     $_SESSION['error'] = $error;
   }
 
+
+// ========================================================================DECONNEXION==================================================
   public function disconnect(){
     unset($this->id, $this->login, $this->password);
   }
 
 
+
+// ================================================CHANGEMENT PROFIL============================================================
   public function update($login, $password, $confirm_password){
     $bdd = new PDO('mysql:host=localhost;dbname=reservationsalles;charset=utf8', 'root', '');
     $error = null;
@@ -95,18 +105,23 @@ class User
       $lenght_cpassword = strlen($confirm_password);
 
       if ($lenght_login <= 255 AND $lenght_password <=255 AND $lenght_cpassword <=255) { //VERIFICATION TAILLE VARCHAR MAX 255S
+        echo '98<br />';
 
         if ($confirm_password = $password) { // CORRESPONDANCE DES PASSWORD
+          echo "101<br/>";
 
           if ($login !== $_SESSION['login']) { // DIFFERENT LOGIN
+            echo "104<br />";
 
             $count = $bdd->prepare("SELECT * FROM utilisateurs WHERE id = :id");
-            $count->execute(array(':login' => $_SESSION['id']));
+            $count->execute(array(':id' => $_SESSION['id']));
             $vue = $count->fetch(PDO::FETCH_ASSOC);
 
             if (!empty($vue)) {
+              echo "112 <br/>";
 
-              if ($_SESSION['id'] !== $vue['id']) { // MÊME ID
+              if ($_SESSION['id'] == $vue['id']) { // MÊME ID
+                echo "ok";
 
                   $crypted_password = password_hash($password, PASSWORD_BCRYPT);
                   $insert = $bdd->prepare("UPDATE utilisateurs SET login = :login, password = :crypted_password WHERE id = :id");
@@ -128,11 +143,46 @@ class User
 
               }
             }
-          }
-          else {
-            $error = "C'est le même login";
+            else {
+              $error = "vue non dedans";
+            }
           }
 
+          elseif ($_SESSION['login'] == $login) { //Si le même login
+            $count = $bdd->prepare("SELECT * FROM utilisateurs WHERE id = :id");
+            $count->execute(array(':id' => $_SESSION['id']));
+            $vue = $count->fetch(PDO::FETCH_ASSOC);
+
+            if (!empty($vue)) {
+              echo "112 <br/>";
+
+              if ($_SESSION['id'] == $vue['id']) { // MÊME ID
+                echo "ok";
+
+                if (password_verify($password, $vue['password'])) {
+                  $error = "Rien à changé";
+                }
+                else {
+                  $crypted_password = password_hash($password, PASSWORD_BCRYPT);
+                  $insert = $bdd->prepare("UPDATE utilisateurs SET login = :login, password = :crypted_password WHERE id = :id");
+                  $insert->execute(array(
+                    ':login' => $login,
+                    ':crypted_password' => $crypted_password,
+                    ':id' => $_SESSION['id']
+                  ));
+
+                  if ($insert) {
+
+                    $this->login = $login;
+                    $_SESSION['login'] = $login;
+                  }
+                  else {
+                    $error = "ERROR";
+                  }
+                }
+              }
+            }
+          }
         } // MOT DE PASSE CORESPONDENT
         else {
           $error = "les mots de passe ne correspondent pas";
@@ -152,6 +202,10 @@ class User
     $_SESSION['error'] = $error;
   }
 
+
+
+
+// ============================================================IF CONNECTED==========================================================
   public function isConnected(){
     if ($this->login) {
       return true;
