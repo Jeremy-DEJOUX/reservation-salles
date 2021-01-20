@@ -2,13 +2,9 @@
     class Week {
         public $days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
         public $months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
-
-        // BOOL
         public $currentIsMonday;
-        // STRING
         public $currentDayString;
         public $monthString;
-        // INT
         public $currentDay;
         public $currentDate;
         public $mondaysDate;
@@ -17,7 +13,7 @@
         public $year;
 
         /**
-         * week constructor: initialise tous les attributs
+         * initialise tous les attributs
          * @param int $day
          * @param int $month, le mois compris entre 1 et 12
          * @param int $year, L'année
@@ -36,7 +32,7 @@
             $makeDate = new DateTimeImmutable($dateString);
             $this->currentDay = intval($makeDate->format('N'));
 
-            // VERIFY IF CURRENT DAY IS MONDAY
+            // Savoir si c'est lundi
             if ($this->currentDay === 1) {
                 $this->mondaysDate = $day;
                 $this->currentIsMonday = TRUE;
@@ -45,7 +41,7 @@
                 $this->mondaysDate = intval($getMondayDate->format('j'));
                 $this->currentIsMonday = FALSE;
             }
-            // SET OTHER ATTRIBUTES
+            // on met à jour les attributs
             $this->currentDate = $dateString;
             $this->day = $day;
             $this->month = $month;
@@ -55,7 +51,7 @@
         }
 
         /**
-         * retourne le mois  en toutes lettres et l'année (ex: Mars 2018)
+         * Nmae of the Months in letter
          * @return string
          */
         public function ToString(): string {
@@ -63,7 +59,7 @@
         }
 
         /**
-         * Retourne le nom du jour en toutes lettres
+         * Name of the Days in letter
          * @param int $index
          * @return string
          */
@@ -72,7 +68,7 @@
         }
 
         /**
-         * renvoie la semaine suivante
+         * retourne à la semaine suivante
          * @return Week
          */
         public function nextWeek(): Week {
@@ -88,7 +84,7 @@
         }
 
         /**
-         * renvoie la semaine précédente, en 'utilisant' le jour actuel comme point de départ
+         * retourne à la semaine précédente
          * @return Week
          */
         public function previousWeek(): Week {
@@ -104,7 +100,7 @@
         }
 
         /**
-         * retourne un objet DateTime pour faire la recherche d'événements
+         * Recherche d'événements
          * @return DateTime
          */
         public function getFirstDay(): DateTime {
