@@ -13,7 +13,7 @@
 
 
         /**
-         * Retourne un array avec tous les événements compris entre deux dates
+         * Retourne un tableaux avec tous les événements compris entre deux dates
          * UTILISATION DE debut pour les sélectionner
          * @param DateTime $start
          * @param DateTime $end
@@ -24,16 +24,14 @@
                     reservations.id, reservations.titre, reservations.debut, reservations.fin, utilisateurs.login
                     FROM reservations JOIN utilisateurs
                     WHERE debut BETWEEN '{$start->format('Y-m-d 08:00:00')}' AND '{$end->format('Y-m-d 19:00:00')}'
-                    AND utilisateurs.id = reservations.id_utilisateur
-            ";
-            // var_dump_pre($sql, '$sql');
+                    AND utilisateurs.id = reservations.id_utilisateur";
             $stmt = $this->pdo->query($sql);
             $results = $stmt->fetchAll();
             return $results;
         }
 
         /**
-         * Retourne un array avec tous les événements compris entre deux dates, INDEXÉ PAR JOUR
+         * Retourne un tableau trier par jour
          * UTILISATION DE debut pour les sélectionner
          * @param DateTime $start
          * @param DateTime $end
@@ -41,11 +39,8 @@
          */
         public function getEventsBetweenByDay(DateTime $start, DateTime $end): array {
             $events = $this->getEventsBetween($start, $end);
-            $days = [];
-            // var_dump_pre($events, 'events[38]: $events');
             foreach ($events as $event) {
                 $date = explode(' ', $event['debut'])[0];
-                // var_dump($date);
                 if (!isset($days[$date])) {
                     $days[$date] = [$event];
                 } else {
@@ -56,7 +51,7 @@
         }
 
         /**
-         * Retourne un array avec tous les événements compris entre deux dates, INDEXÉ PAR JOUR
+         * Retourne un tableaux avec tous les événements compris entre deux dates, INDEXÉ PAR JOUR
          * UTILISATION DE debut pour les sélectionner
          * @param DateTime $start
          * @param DateTime $end
@@ -71,7 +66,6 @@
                 $diff = new Events;
                 $length = $diff->timeLength($event['debut'], $event['fin']);
 
-                // <rajout> pour la presentation de <table>
                 $day[$event['debut']]['length'] = $length;
                 $dateStart = new DateTime($event['debut']);
                 $dateDay = $dateStart->format('N');
@@ -80,20 +74,12 @@
                 $day[$event['debut']]['case'] = $case;
                 $lengthEvents[$case] = $length;
 
-                // $tempY = $timeHour + 1;
-                // logical part
-                // while ($length > 1) {
-                //     $this->lengthEvents[$tempY . '-' . $dateDay] = FALSE;
-                //     $tempY++;
-                //     $length--;
-                // }
-                // </rajout>
             }
             return $days;
         }
 
         /**
-         * prend deux 'Y-m-d H:i:s' en entrée et renvoie la durée en heures
+         * prend deux diiferentes dates en entrée et renvoie la durée en heures
          * @param string $start
          * @param string $end
          * @return int
@@ -107,7 +93,7 @@
         }
 
         /**
-         * retourne toute
+         * retourne les évenements
          * @param int $id
          */
         public function getEvent(int $id): array {
@@ -123,7 +109,7 @@
         }
 
         /**
-         * retourne toute
+         * retourne les evenments
          * @param int $id
          */
         public function getEventById(int $id): array {
