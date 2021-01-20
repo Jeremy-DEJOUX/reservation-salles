@@ -10,8 +10,6 @@
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
             ]);
         }
-
-
         /**
          * Retourne un tableaux avec tous les événements compris entre deux dates
          * UTILISATION DE debut pour les sélectionner
@@ -124,5 +122,10 @@
             $results = $stmt->fetch(PDO::FETCH_ASSOC);
 
             return $results;
+        }
+
+
+        public function Validateform($title, $date, $start, $end, $text){
+          
         }
     }

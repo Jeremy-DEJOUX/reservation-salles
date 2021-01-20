@@ -27,6 +27,12 @@
                 <input type="time" name="end" value="" required placeholder="HH:MM">
               </div>
 
+              <label for="">Description</label>
+              <textarea name="description" id="Description" rows="8" cols="80"></textarea>
+
+
+              <button name="Send">Ajouter l'evenement</button>
+
             </form>
         </main>
 
