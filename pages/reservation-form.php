@@ -4,14 +4,17 @@
     $title = 'réservation: formulaire';
 
 
-    if (isset($_POST['submit'])) {
-        $event = new Creneaux();
-        $event->Validateform($_POST['Titles'], $_POST['Date'], $_POST['start'], $_POST['end'], $_POST['description']);
-        if (isset($_SESSION['alert'])) {
-            var_dump($_SESSION['alert']);
-            echo $_SESSION['alert'];
+    $data = [];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+        $data = $_POST;
+        $errors = [];
+        $validation = new EventValidator();
+        $errors = $validation->validates($_POST);
 
+        if (empty($errors)){
+            var_dump($errors);
         }
+
     }
 
 ?>
@@ -20,31 +23,40 @@
     <body class="container">
         <main>
             <h1>Formulaire de réservation de salle</h1>
-            <?php if (isset($_SESSION['alert'])) { echo "<h2>".$_SESSION['alert']."</h2>"; }?>
 
             <form class="" action="" method="post">
 
               <label for="">Titres
-              <input type="text" name="Titles" required value="">
+              <input type="text" name="name" required value="<?= isset($data['name']) ? ($data['name']) : ''; ?>">
+                  <?php if (isset($errors['name'])): ?>
+                  <?= $errors['name']; ?>
+                  <?php endif; ?>
               </label>
 
               <label for="">Date
-              <input type="date" name="Date" required value="">
+              <input type="date" name="date" required value="<?= isset($data['date']) ? ($data['date']) : ''; ?>">
+
+                  <?php if (isset($errors['Date'])): ?>
+                      <?= $errors['Date']; ?>
+                  <?php endif; ?>
               </label>
 
 
               <div class="heure">
                 <label for="">Heure de Début
-                <input type="time" name="start" value="" required placeholder="HH:MM">
+                <input type="time" name="start" value="<?= isset($data['start']) ? ($data['start']) : ''; ?>" required placeholder="HH:MM">
+                    <?php if (isset($errors['start'])): ?>
+                        <?= $errors['start']; ?>
+                    <?php endif; ?>
                 </label>
 
                 <label for="">Heure de Fin
-                <input type="time" name="end" value="" required placeholder="HH:MM">
+                <input type="time" name="end" value="<?= isset($data['end']) ? ($data['end']) : ''; ?>" required placeholder="HH:MM">
                 </label>
               </div>
 
               <label for="">Description
-              <textarea name="description" id="Description" rows="8" cols="80"></textarea>
+              <textarea name="description" id="description" rows="8" cols="80"><?= isset($data['description']) ? ($data['description']) : ''; ?></textarea>
               </label>
 
 

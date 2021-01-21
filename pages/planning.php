@@ -1,8 +1,5 @@
 <?php
-session_start();
-require_once('../src/Classes/Week.php');
-require_once('../src/Classes/User.php');
-require_once('../src/Classes/Creneaux.php');
+require_once('../src/pdo.php');
 
 date_default_timezone_set ('Europe/Paris');
 
@@ -16,7 +13,7 @@ $actWeek = new Week($_GET['day'] ?? null, $_GET['month'] ?? null, $_GET['year'] 
 $startingDayWeek = $actWeek->getFirstDay();
 $end = (clone $startingDayWeek)->modify('+ 5 days - 1 second');
 
-$events = $eventsFromDB->getEventsBetweenByDayTime($startingDayWeek, $end);
+$events = $eventsFromDB->getCreneauxBetweenByDayTime($startingDayWeek, $end);
 foreach ($events as $k => $event) {
     $tableCell[$event['case']] = $event['length'];
 }
@@ -94,7 +91,7 @@ foreach ($events as $k => $event) {
                         }
                         else {
                             if (isset($tableCell[$coordinate])) {
-                                ;
+                                echo "wait for it";
                             }
                             else {
                                 echo '<td>';
