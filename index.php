@@ -1,6 +1,5 @@
 <?php
 
-session_start();
 $title = 'Acceuil';
 $path_index = "index.php";
 $path_inscription = "pages/inscription.php";

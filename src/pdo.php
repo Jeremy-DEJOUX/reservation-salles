@@ -11,5 +11,5 @@ $_SESSION['user'] = new User();
     $dsn = "mysql:host=localhost;dbname=reservationsalles";
     $userDB = 'root';
     $passDB = '';
-    $_SESSION['bdd'] = new PDO("$dsn","$userDB", "$passDB");
-    $_SESSION['bdd']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $bdd = new PDO("$dsn","$userDB", "$passDB");
+    $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

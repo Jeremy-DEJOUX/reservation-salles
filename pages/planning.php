@@ -91,12 +91,11 @@ foreach ($events as $k => $event) {
                         }
                         else {
                             if (isset($tableCell[$coordinate])) {
-                                echo "wait for it";
+                                echo "Wait for it";
                             }
                             else {
                                 echo '<td>';
-                                // // ERASE AFTER DEBUG
-                                // echo '[' . $coordinate . ']';
+                                 echo '[' . $coordinate . ']';
                                 echo '</td>';
                             }
                         }

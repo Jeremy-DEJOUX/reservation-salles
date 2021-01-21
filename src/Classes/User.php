@@ -6,16 +6,14 @@ class User
   public $login;
   private $password;
 
-  public function __construct(){
-
-  }
+    public function __construct() {
+    }
 
 
 
 
 // =======================================INSCRIPTION============================================================
-  public function register($login, $password, $confirm_password){
-    $bdd = new PDO('mysql:host=localhost;dbname=reservationsalles;charset=utf8', 'root', '');
+  public function register($bdd, $login, $password, $confirm_password){
     $error = null;
 
     if (!empty($login) AND !empty($password) AND !empty($confirm_password)) {
@@ -62,8 +60,7 @@ class User
 
 
 // ==================================================================CONNEXION=========================================================
-  public function connexion($login, $password){
-    $bdd = new PDO('mysql:host=localhost;dbname=reservationsalles;charset=utf8', 'root', '');
+  public function connexion($bdd, $login, $password){
     $error = null;
 
     if (!empty($login) || !empty($password)) {
@@ -108,9 +105,8 @@ class User
 
 
 // ================================================CHANGEMENT PROFIL============================================================
-  public function update($login, $password, $confirm_password){
-    $bdd = new PDO('mysql:host=localhost;dbname=reservationsalles;charset=utf8', 'root', '');
-    $error = null;
+  public function update($bdd, $login, $password, $confirm_password){
+      $error = null;
 
     if (!empty($login) AND !empty($password) AND !empty($confirm_password)) { //VERIFICATION NON VIDE
 

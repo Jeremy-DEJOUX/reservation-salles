@@ -7,7 +7,9 @@ require_once('../src/pdo.php');
   $path_connexion = "connexion.php";
 
   if (isset($_POST['submit'])) {
-    $_SESSION['user']->connexion($_POST['login_user'], $_POST['password_user']);
+      $_SESSION['user']->connexion($bdd,
+        $_POST['login_user'],
+        $_POST['password_user']);
   }
 ?>
 
