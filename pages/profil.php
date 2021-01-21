@@ -1,5 +1,5 @@
 <?php
-require_once('../src/config.php');
+require_once('../src/pdo.php');
 
 $path_index = "../index.php";
 $path_inscription = "inscription.php";
@@ -11,7 +11,6 @@ $path_profil = "profl.php";
 
 
   if (isset($_SESSION['id'])) {
-    // code...
 
     if (isset($_POST['new_submit'])) {
       $_SESSION['user']->update($_POST['new_login'], $_POST['new_password'], $_POST['confirm_new_password']);
@@ -28,15 +27,10 @@ $path_profil = "profl.php";
   <head>
       <meta charset="UTF-8">
       <title>Profil</title>
-      <link rel="stylesheet" href="../CSS/profil.css">
       <link rel="stylesheet" href="../CSS/header.css">
       <link rel="stylesheet" href="../CSS/footer.css">
-      <script src="https://kit.fontawesome.com/56188ecd90.js" crossorigin="anonymous"></script>
   </head>
   <body>
-
-      <!-- ===================================HEADER========================================== -->
-      <?php include_once('../pages/header.php'); ?>
 
   <!-- =======================================MAIN=============================================== -->
       <main class="flex a_center column j_around" id="main_connexion">
@@ -53,27 +47,29 @@ $path_profil = "profl.php";
           <form action="" method="post" id="formulaire_edition" class="flex a_center column j_around">
 
               <section class="flex column a_center">
-                  <label for="new_login">Nouveau Login :</label>
+                  <label for="new_login">Nouveau Login :
                   <input type="text" name="new_login" value="<?php echo $_SESSION['login']; ?>">
+                  </label>
               </section>
 
               <section class="flex j_around a_around">
                   <article class="flex column j_around a_center">
-                      <label for="new_password">Nouveau mot de passe</label>
+                      <label for="new_password">Nouveau mot de passe
                       <input type="password" name="new_password" value="">
+                      </label>
                   </article>
 
                   <article class="flex column j_around a_center">
-                      <label for="confirm_new_passsword">Confirm Password :</label>
+                      <label for="confirm_new_passsword">Confirm Password :
+
                       <input type="password" name="confirm_new_password">
+                      </label>
                   </article>
               </section>
 
               <button type="submit" name="new_submit" >Mettre à jour mon profil</button>
       </main>
 
-  <!-- ====================================FOOTER============================================ -->
-      <?php include_once('../pages/footer.php') ?>
 
   </body>
   </html>

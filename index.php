@@ -1,5 +1,7 @@
 <?php
-require_once('src/config.php');
+
+session_start();
+$title = 'Acceuil';
 $path_index = "index.php";
 $path_inscription = "pages/inscription.php";
 $path_connexion = "pages/connexion.php";
@@ -14,12 +16,10 @@ $path_connexion = "pages/connexion.php";
     <link rel="stylesheet" href="CSS/footer.css">
   </head>
   <body>
-    <?php include_once('pages/header.php') ?>
 
     <main>
       <p>Hello</p>
     </main>
 
-    <?php include_once('pages/footer.php') ?>
   </body>
 </html>

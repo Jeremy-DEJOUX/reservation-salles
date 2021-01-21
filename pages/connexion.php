@@ -1,6 +1,6 @@
 <?php
-  // require_once("../src/Classes/User.php");
-  require_once("../src/config.php");
+
+require_once('../src/pdo.php');
 
   $path_index = "../index.php";
   $path_inscription = "inscription.php";
@@ -21,14 +21,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Connexion</title>
-    <link rel="stylesheet" href="../CSS/connexion.css">
     <link rel="stylesheet" href="../CSS/header.css">
     <link rel="stylesheet" href="../CSS/footer.css">
-    <script src="https://kit.fontawesome.com/56188ecd90.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- ===================================HEADER========================================== -->
-    <?php require_once('../pages/header.php'); ?>
 
 
 <!-- =======================================MAIN=============================================== -->
@@ -39,22 +35,20 @@
 
         <form action="connexion.php" method="post" id="connexion_formulaire" class="flex a_center column j_around">
             <section class="flex column a_center">
-                <label for="login_user">Login :</label>
+                <label for="login_user">Login :
                 <input type="text" name="login_user">
+                </label>
             </section>
 
              <section class="flex column a_center">
-                    <label for="password_user">Password :</label>
+                    <label for="password_user">Password :
                     <input type="password" name="password_user">
+                    </label>
             </section>
 
             <button type="submit" name="submit">Connexion</button>
         </form>
     </main>
 
-
-
-<!-- ====================================FOOTER============================================ -->
-    <?php require_once('../pages/footer.php') ?>
 </body>
 </html>

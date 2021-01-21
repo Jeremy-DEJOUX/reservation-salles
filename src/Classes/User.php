@@ -7,6 +7,7 @@ class User
   private $password;
 
   public function __construct(){
+
   }
 
 
@@ -17,12 +18,12 @@ class User
     $bdd = new PDO('mysql:host=localhost;dbname=reservationsalles;charset=utf8', 'root', '');
     $error = null;
 
-    if (!empty($login) || !empty($password) || !empty($password)) {
+    if (!empty($login) AND !empty($password) AND !empty($confirm_password)) {
       $login_len = strlen($login);
       $lenght_password = strlen($password);
 
       if ($login_len < 255 || $lenght_password < 255) {
-        if ($password = $confirm_password) {
+        if ($password == $confirm_password) {
           $count = $bdd->prepare("SELECT COUNT(*) FROM utilisateurs WHERE login = :login");
           $count->execute(array(':login' => $login));
           $num_rows = $count->fetchColumn();
@@ -40,9 +41,22 @@ class User
               header('Location: ../pages/connexion.php');
             }
           }
+          else{
+            $error = "Le login existe déja";
+          }
+        }
+        else{
+          $error = "les deux mots de passes ne correspondent pas";
         }
       }
+      else{
+        $error = "Le Login et le mot de passe sont trops grand max 255 caractères";
+      }
     }
+    else{
+      $error = "Il faut remplir tous les champs";
+    }
+    $_SESSION['error'] = $error;
   }
 
 
@@ -71,7 +85,7 @@ class User
             $this->login = $login;
             $this->password = $donnees['password'];
             header('Location: ../pages/profil.php');
-          }          
+          }
           else {
             $error = "Ce n'est pas le bon mot de passe";
           }
@@ -104,43 +118,35 @@ class User
       $lenght_password = strlen($password);
       $lenght_cpassword = strlen($confirm_password);
 
-      if ($lenght_login <= 255 AND $lenght_password <=255 AND $lenght_cpassword <=255) { //VERIFICATION TAILLE VARCHAR MAX 255S
-        echo '98<br />';
+      if ($lenght_login <= 255 AND $lenght_password <=255 AND $lenght_cpassword <=255) { //VERIFICATION TAILLE VARCHAR MAX 255
 
         if ($confirm_password = $password) { // CORRESPONDANCE DES PASSWORD
-          echo "101<br/>";
 
           if ($login !== $_SESSION['login']) { // DIFFERENT LOGIN
-            echo "104<br />";
 
             $count = $bdd->prepare("SELECT * FROM utilisateurs WHERE id = :id");
             $count->execute(array(':id' => $_SESSION['id']));
             $vue = $count->fetch(PDO::FETCH_ASSOC);
 
             if (!empty($vue)) {
-              echo "112 <br/>";
 
               if ($_SESSION['id'] == $vue['id']) { // MÊME ID
-                echo "ok";
 
-                  $crypted_password = password_hash($password, PASSWORD_BCRYPT);
-                  $insert = $bdd->prepare("UPDATE utilisateurs SET login = :login, password = :crypted_password WHERE id = :id");
-                  $insert->execute(array(
-                    ':login' => $login,
-                    ':crypted_password' => $crypted_password,
-                    ':id' => $_SESSION['id']
-                  ));
+                $crypted_password = password_hash($password, PASSWORD_BCRYPT);
+                $insert = $bdd->prepare("UPDATE utilisateurs SET login = :login, password = :crypted_password WHERE id = :id");
+                $insert->execute(array(
+                  ':login' => $login,
+                  ':crypted_password' => $crypted_password,
+                  ':id' => $_SESSION['id']
+                ));
 
-                  if ($insert) {
-
-                    $this->login = $login;
-                    $_SESSION['login'] = $login;
-                  }
-                  else {
-                    $error = "ERROR";
-                  }
-
-
+                if ($insert) {
+                  $this->login = $login;
+                  $_SESSION['login'] = $login;
+                }
+                else {
+                  $error = "ERROR";
+                }
               }
             }
             else {
@@ -215,5 +221,3 @@ class User
     }
   }
 }
-
-?>
