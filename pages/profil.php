@@ -13,7 +13,7 @@ $path_profil = "profl.php";
   if (isset($_SESSION['id'])) {
 
     if (isset($_POST['new_submit'])) {
-      $_SESSION['user']->update($_POST['new_login'], $_POST['new_password'], $_POST['confirm_new_password']);
+      $_SESSION['user']->update($bdd, $_POST['new_login'], $_POST['new_password'], $_POST['confirm_new_password']);
     }
 
 

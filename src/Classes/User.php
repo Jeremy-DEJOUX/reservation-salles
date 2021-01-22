@@ -156,10 +156,8 @@ class User
             $vue = $count->fetch(PDO::FETCH_ASSOC);
 
             if (!empty($vue)) {
-              echo "112 <br/>";
 
               if ($_SESSION['id'] == $vue['id']) { // MÊME ID
-                echo "ok";
 
                 if (password_verify($password, $vue['password'])) {
                   $error = "Rien à changé";
