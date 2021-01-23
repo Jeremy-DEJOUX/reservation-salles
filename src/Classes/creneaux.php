@@ -1,8 +1,6 @@
 <?php
-    class Creneaux {
-      public $lengthEvents = [];
-      public $eventsForTheWeek = [];
-      public $pdo;
+    class Events
+    {
 
       public function __construct() {
           $dsn = "mysql:host=localhost;dbname=reservationsalles";
@@ -13,14 +11,22 @@
           $this->pdo = $pdo;
       }
 
-      public function getCreneauxBetween(DateTime $start, DateTime $end): array {
+      public function getEventsBetween(DateTime $start, DateTime $end): array {
+//          $sql = "SELECT * FROM reservations
+//                  WHERE debut BETWEEN '{$start->format('Y-m-d')}' AND '{$end->format('Y-m-d')}'";
           $sql = "SELECT
-                  reservations.id, reservations.titre, reservations.debut, reservations.fin, utilisateurs.login
-                  FROM reservations JOIN utilisateurs
-                  WHERE debut BETWEEN '{$start->format('Y-m-d 08:00:00')}' AND '{$end->format('Y-m-d 19:00:00')}'
-                  AND utilisateurs.id = reservations.id_utilisateur";
+                    reservations.id, reservations.titre, reservations.debut, reservations.fin, utilisateurs.login
+                    FROM reservations JOIN utilisateurs
+                    WHERE debut BETWEEN '{$start->format('Y-m-d 08:00:00')}' AND '{$end->format('Y-m-d 19:00:00')}'
+                    AND utilisateurs.id = reservations.id_utilisateur
+            ";
+          echo $sql;
+
           $stmt = $this->pdo->query($sql);
-          return $stmt->fetchAll();
+          $result = $stmt->fetchAll();
+          var_dump($result);
+          return $result;
+
       }
 
       /**
@@ -30,9 +36,9 @@
        * @param DateTime $end
        * @return array
        */
-      public function getCreneauxBetweenByDay(DateTime $start, DateTime $end): array {
-          $Creneaux = $this->getCreneauxBetween($start, $end);
-          foreach ($Creneaux as $event) {
+      public function getEventsBetweenByDay(DateTime $start, DateTime $end): array {
+          $Events = $this->getEventsBetween($start, $end);
+          foreach ($Events as $event) {
               $date = explode(' ', $event['debut'])[0];
               if (!isset($days[$date])) {
                   $days[$date] = [$event];
@@ -50,13 +56,13 @@
        * @param DateTime $end
        * @return array
        */
-      public function getCreneauxBetweenByDayTime(DateTime $start, DateTime $end): array {
-          $Creneaux = $this->getCreneauxBetween($start, $end);
-          $days = [];
-          foreach ($Creneaux as $event) {
+      public function getEventsBetweenByDayTime(DateTime $start, DateTime $end): array {
+          $Events = $this->getEventsBetween($start, $end);
+          $day = [];
+          foreach ($Events as $event) {
               $day[$event['debut']] = $event;
 
-              $diff = new Creneaux;
+              $diff = new Events;
               $length = $diff->timeLength($event['debut'], $event['fin']);
 
               $day[$event['debut']]['length'] = $length;
@@ -65,10 +71,10 @@
               $timeHour = $dateStart->format('G');
               $case = ($timeHour - 7) . '-' . $dateDay;
               $day[$event['debut']]['case'] = $case;
-              $lengthCreneaux[$case] = $length;
+              $lengthEvents[$case] = $length;
 
           }
-          return $days;
+          return $day;
       }
 
       /**

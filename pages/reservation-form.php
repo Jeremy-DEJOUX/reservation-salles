@@ -12,6 +12,21 @@
         $errors = $validation->validates($_POST);
 
         if (empty($errors)){
+            $dateStart = $_POST['date'] . ' ' . $_POST['start'] . ':00';
+            $dateEnd = $_POST['date'] . ' ' . $_POST['end'] . ':00';
+            $insert = "INSERT INTO reservations 
+                (titre, description, debut, fin, id_utilisateur) 
+                VALUES (:title, :description, :debut, :fin, :id_user)";
+
+            $stmt = $bdd->prepare($insert);
+
+            $stmt->execute([
+                ':title'=> htmlentities($_POST['name']),
+                ':description'=> htmlentities($_POST['description']),
+                ':debut'=> $dateStart,
+                ':fin'=> $dateEnd,
+                ':id_user'=> $_SESSION['id']
+            ]);
             var_dump($errors);
         }
 

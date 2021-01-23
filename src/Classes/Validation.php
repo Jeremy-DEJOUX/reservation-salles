@@ -11,4 +11,15 @@ class EventValidator extends Validator
         $this->validate('start', 'beforeTime', 'end');
         return $this->errors;
     }
+
+    public function send($bdd, $titre, $description, $debut, $fin, $id_utilisateur){
+        $sql = $bdd->prepare("INSERT INTO reservations(titre, description, debut, fin, id_utilisateur) VALUES(:titre, :desscription, :debut, :fin, :id_utilisateur)");
+        $sql->execute([
+            ':titre' => $titre,
+            ':desciption'=> $description,
+            ':debut' => $debut->format('Y-m-d-00:00:00'),
+            ':fin' => $fin->format('Y-m-d-00:00:00'),
+            ':id_utilisateur' => $id_utilisateur,
+        ]);
+    }
 }

@@ -5,15 +5,17 @@ date_default_timezone_set ('Europe/Paris');
 
 $title = 'planning';
 
-$eventsFromDB = new Creneaux();
+$eventsFromDB = new Events();
 $tableCell = [];
 $currentEvent = [];
 
 $actWeek = new Week($_GET['day'] ?? null, $_GET['month'] ?? null, $_GET['year'] ?? null);
-$startingDayWeek = $actWeek->getFirstDay();
-$end = (clone $startingDayWeek)->modify('+ 5 days - 1 second');
 
-$events = $eventsFromDB->getCreneauxBetweenByDayTime($startingDayWeek, $end);
+$startingDayWeek = $actWeek->getFirstDay();
+$end = (clone $startingDayWeek)->modify('+ 1 week - 1 second');
+var_dump($end, $startingDayWeek);
+$events = $eventsFromDB->getEventsBetweenByDayTime($startingDayWeek, $end);
+var_dump($events);
 foreach ($events as $k => $event) {
     $tableCell[$event['case']] = $event['length'];
 }

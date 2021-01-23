@@ -4,7 +4,7 @@ class User
 {
   private $id;
   public $login;
-  private $password;
+  public $password;
 
     public function __construct() {
     }
