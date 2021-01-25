@@ -2,9 +2,13 @@
 
 require_once('../src/pdo.php');
 
-  $path_index = "../index.php";
-  $path_inscription = "inscription.php";
-  $path_connexion = "connexion.php";
+$path_index = "../index.php";
+$path_inscription = "inscription.php";
+$path_connexion = "connexion.php";
+$path_formulaire = "reservation-form.php";
+$path_planning = "planning.php";
+$path_reservation = "reservation.php";
+$path_profil = "profl.php";
 
   if (isset($_POST['submit'])) {
       $_SESSION['user']->connexion($bdd,
@@ -27,6 +31,8 @@ require_once('../src/pdo.php');
     <link rel="stylesheet" href="../CSS/footer.css">
 </head>
 <body>
+
+  <?php include_once('header.php'); ?>
 
 
 <!-- =======================================MAIN=============================================== -->

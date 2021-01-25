@@ -32,6 +32,8 @@ $path_profil = "profl.php";
   </head>
   <body>
 
+    <?php include_once('header.php'); ?>
+
   <!-- =======================================MAIN=============================================== -->
       <main class="flex a_center column j_around" id="main_connexion">
 

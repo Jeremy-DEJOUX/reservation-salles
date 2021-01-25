@@ -1,11 +1,11 @@
 <!-- ====================CONNECTED==================== -->
 <?php
-  $connected = $_SESSION['user']->isConnected();
-  if ($connected) {
+  // $connected = $_SESSION['user']->isConnected();
+  if (isset($_SESSION['id'])) {
 ?>
-<header>
-  <nav>
-    <ul>
+<header class="flex a_center">
+  <nav class="flex a_center">
+    <ul class="flex j_around a_center">
       <li> <?php echo "<a href='$path_index'> Acceuil </a>"; ?> </li>
       <li> <?php echo "<a href='$path_planning'> Planning </a>"; ?> </li>
       <li> <?php echo "<a href='$path_reservation'> Reservation </a>"; ?> </li>
@@ -21,9 +21,9 @@
   else {
 ?>
 
-<header>
-  <nav>
-    <ul>
+<header class="flex a_center">
+  <nav class="flex a_center">
+    <ul class="flex j_around a_center">
       <li> <?php echo "<a href='$path_index'>Acceuil</a>"; ?> </li>
       <li> <?php echo "<a  href='$path_inscription'> Inscription </a>";  ?> </li>
       <li> <?php echo "<a  href='$path_connexion'> Connexion </a>";  ?> </li>
