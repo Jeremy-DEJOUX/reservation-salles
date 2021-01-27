@@ -1,5 +1,12 @@
 <?php
 require_once('../src/pdo.php');
+$path_index = "../index.php";
+$path_inscription = "inscription.php";
+$path_connexion = "connexion.php";
+$path_formulaire = "reservation-form.php";
+$path_planning = "planning.php";
+$path_reservation = "reservation.php";
+$path_profil = "profil.php";
 
 date_default_timezone_set ('Europe/Paris');
 
@@ -13,9 +20,7 @@ $actWeek = new Week($_GET['day'] ?? null, $_GET['month'] ?? null, $_GET['year'] 
 
 $startingDayWeek = $actWeek->getFirstDay();
 $end = (clone $startingDayWeek)->modify('+ 1 week - 1 second');
-var_dump($end, $startingDayWeek);
 $events = $eventsFromDB->getEventsBetweenByDayTime($startingDayWeek, $end);
-var_dump($events);
 foreach ($events as $k => $event) {
     $tableCell[$event['case']] = $event['length'];
 }
@@ -23,22 +28,27 @@ foreach ($events as $k => $event) {
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="../CSS/header.css">
+  <link rel="stylesheet" href="../CSS/planning.css">
+  <link rel="stylesheet" href="../CSS/inscription.css">
+</head>
 <body>
-    <main>
-    <div class="calendar__nav">
-        <a href="planning.php?day=<?= $actWeek->previousWeek()->day; ?>&month=<?= $actWeek->previousWeek()->month; ?>&year=<?= $actWeek->previousWeek()->year; ?>"><</a>
-        <h1>planning: <?= $actWeek->ToString(); ?></h1>
-        <a href="planning.php?day=<?= $actWeek->nextWeek()->day; ?>&month=<?= $actWeek->nextWeek()->month; ?>&year=<?= $actWeek->nextWeek()->year; ?>">></a>
-    </div>
+  <?php include_once('header.php'); ?>
+
+
+    <main class="flex column j_around a_center">
+
+    <section class="flex j_around a_center">
+        <a href="planning.php?day=<?= $actWeek->previousWeek()->day; ?>&month=<?= $actWeek->previousWeek()->month; ?>&year=<?= $actWeek->previousWeek()->year; ?>"> <= </a>
+        <h1> <?= $actWeek->ToString(); ?> </h1>
+        <a href="planning.php?day=<?= $actWeek->nextWeek()->day; ?>&month=<?= $actWeek->nextWeek()->month; ?>&year=<?= $actWeek->nextWeek()->year; ?>"> => </a>
+    </section>
+
     <table>
-        <colgroup>
-            <col style="background-color:#ddd;">
-            <col span="5">
-            <col span="2" style="background-color:#ddd;">
-        </colgroup>
         <?php
-            // CONSTRUCT THE TABLE
-            // ROWS
             for ($y = 0; $y < 12; ++$y) {
                 echo '<tr>', "\n";
                 // COLUMNS
@@ -75,12 +85,11 @@ foreach ($events as $k => $event) {
                             }
                         }
                         if (isset($cellLength) && $cellLength !== FALSE) {
-                            echo '<td rowspan="'. $cellLength . '"';
-                            echo ' style="color:white;text-shadow: 2px 1px 2px black; background-color:' . randomHsla() . '">';
+                            echo '<td id="reservation" rowspan="'. $cellLength . '"';
                             echo '(' . $cellLength . ')', '<br>';
                             echo $currentEvent['login'], ',<br />';
                             echo $currentEvent['titre'], '<br />';
-                            echo "<a href=\"reservation.php?id=" . $currentEvent['id'] . '">détails</a>';
+                            echo "<a href=\"reservation.php?id=" . $currentEvent['id'] . '">détails...</a>';
                             echo '</td>';
 
                             // logical part
@@ -93,11 +102,10 @@ foreach ($events as $k => $event) {
                         }
                         else {
                             if (isset($tableCell[$coordinate])) {
-                                echo "Wait for it";
+                                echo "";
                             }
                             else {
                                 echo '<td>';
-                                 echo '[' . $coordinate . ']';
                                 echo '</td>';
                             }
                         }

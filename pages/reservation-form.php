@@ -1,7 +1,15 @@
 <?php
     require_once('../src/pdo.php');
-    require_once ('../src/function.php');
+    require_once('../src/function.php');
     $title = 'réservation: formulaire';
+
+    $path_index = "../index.php";
+    $path_inscription = "inscription.php";
+    $path_connexion = "connexion.php";
+    $path_formulaire = "reservation-form.php";
+    $path_planning = "planning.php";
+    $path_reservation = "reservation.php";
+    $path_profil = "profl.php";
 
 
     $data = [];
@@ -43,6 +51,7 @@
     <link rel="stylesheet" href="../CSS/footer.css">
 </head>
     <body>
+      <?php include_once('header.php'); ?>
         <main class="flex a_center column j_around">
             <h1>Formulaire de réservation de salle</h1>
 

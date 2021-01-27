@@ -20,11 +20,9 @@
                     WHERE debut BETWEEN '{$start->format('Y-m-d 08:00:00')}' AND '{$end->format('Y-m-d 19:00:00')}'
                     AND utilisateurs.id = reservations.id_utilisateur
             ";
-          echo $sql;
 
           $stmt = $this->pdo->query($sql);
           $result = $stmt->fetchAll();
-          var_dump($result);
           return $result;
 
       }

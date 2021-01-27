@@ -31,28 +31,51 @@ else {
 
 <!DOCTYPE html>
 <html lang="fr">
-<body class="container">
-<main>
-    <h1>Réservation</h1>
-    <?php
-    if (!isset($_SESSION['logged']) || !$_SESSION['logged']) :
-        echo '<p class="error">Cette partie du site où vous pourrez voir la réservation de salle sélectionnée, ne sera visible qu\'une fois connecté</p>';
-    elseif (isset($_SESSION['error'])):
-        echo '<p class="error">' . $_SESSION['error'] . '</p>';
-        unset($_SESSION['error']);
-    else :
-        ?>
-        <article class="reservation">
-            <p><span class="info">Réservation réalisée par</span>: <span class="loginReserv"><?= $eventInfos['login']; ?></p>
-            <p><span class="info">titre</span>: <span class="reservationTitre">"<?= $eventInfos['titre']; ?>"</span></p>
-            <p><span class="info">description</span>:<br>
+  <head>
+      <meta charset="UTF-8">
+      <title>Profil</title>
+      <link rel="stylesheet" href="../CSS/header.css">
+      <link rel="stylesheet" href="../CSS/reservation.css">
+      <link rel="stylesheet" href="../CSS/footer.css">
+  </head>
+  <body class="container">
+    <?php include_once('header.php'); ?>
+    <main class="flex column j_center a_center">
+        <h1><u>Réservation</u></h1>
+
+        <?php if (!isset($_SESSION['id']) || !$_SESSION['id']) :
+            echo '<p class="error">Cette partie du site où vous pourrez voir la réservation de salle sélectionnée, ne sera visible qu\'une fois connecté</p>';
+
+        elseif (isset($_SESSION['error'])):
+            echo '<p class="error">' . $_SESSION['error'] . '</p>';
+            unset($_SESSION['error']);
+
+        else :
+            ?>
+            <section class="flex j_around a_center">
+              <article class="flex column j_center a_center">
+                <p>Réalisée par : </p>
+                <?= $eventInfos['login']; ?>
+              </article>
+
+              <article class="flex column j_center a_center">
+                <p>Titre : </p>
+                "<?= $eventInfos['titre']; ?>"
+              </article>
+
+              <article class="flex column j_center a_center">
+                <p>Description :</p>
                 <?= $eventInfos['description']; ?>
-            </p>
-            <p>Commence le <?= $formated->format($timestampStart); ?>, <br>
-                et finit le <?= $formated->format($timestampEnd); ?>.
-            </p>
-        </article>
-    <?php endif; ?>
-</main>
-</body>
+              </article>
+
+              <article class="flex column a_center">
+                <p>Commence le : </P>
+                <?= $formated->format($timestampStart); ?>,
+                <p>Finit le : </p>
+                <?= $formated->format($timestampEnd); ?>.
+              </article>
+            </section>
+        <?php endif; ?>
+    </main>
+  </body>
 </html>
