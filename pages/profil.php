@@ -28,6 +28,7 @@ $path_profil = "profl.php";
       <meta charset="UTF-8">
       <title>Profil</title>
       <link rel="stylesheet" href="../CSS/header.css">
+      <link rel="stylesheet" href="../CSS/profil.css">
       <link rel="stylesheet" href="../CSS/footer.css">
   </head>
   <body>
@@ -40,7 +41,6 @@ $path_profil = "profl.php";
         <section class="flex a_center column j_around">
           <h1>Profil de <?php echo $_SESSION['login']; ?></h1> <br />
 
-          <h3>Login = <?php echo $_SESSION['login']; ?></h3> <br />
           <?php if (isset($_SESSION['error'])) { echo "<h2>".$_SESSION['error']."</h2>"; }?>
 
           <a href="deconnexion.php">Se Déconnecter</a>
@@ -48,24 +48,20 @@ $path_profil = "profl.php";
 
           <form action="" method="post" id="formulaire_edition" class="flex a_center column j_around">
 
-              <section class="flex column a_center">
-                  <label for="new_login">Nouveau Login :
+              <section class="flex column a_center j_center">
+                  <label for="new_login">New Login :</label>
                   <input type="text" name="new_login" value="<?php echo $_SESSION['login']; ?>">
-                  </label>
               </section>
 
               <section class="flex j_around a_around">
-                  <article class="flex column j_around a_center">
-                      <label for="new_password">Nouveau mot de passe
+                  <article class="flex column j_center a_center">
+                      <label for="new_password">New Password :</label>
                       <input type="password" name="new_password" value="">
-                      </label>
                   </article>
 
-                  <article class="flex column j_around a_center">
-                      <label for="confirm_new_passsword">Confirm Password :
-
+                  <article class="flex column j_center a_center">
+                      <label for="confirm_new_passsword">Confirm Password :</label>
                       <input type="password" name="confirm_new_password">
-                      </label>
                   </article>
               </section>
 
