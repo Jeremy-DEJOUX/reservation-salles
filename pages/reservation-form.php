@@ -14,8 +14,8 @@
         if (empty($errors)){
             $dateStart = $_POST['date'] . ' ' . $_POST['start'] . ':00';
             $dateEnd = $_POST['date'] . ' ' . $_POST['end'] . ':00';
-            $insert = "INSERT INTO reservations 
-                (titre, description, debut, fin, id_utilisateur) 
+            $insert = "INSERT INTO reservations
+                (titre, description, debut, fin, id_utilisateur)
                 VALUES (:title, :description, :debut, :fin, :id_user)";
 
             $stmt = $bdd->prepare($insert);
@@ -35,44 +35,67 @@
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-    <body class="container">
-        <main>
+<head>
+    <meta charset="UTF-8">
+    <title>Profil</title>
+    <link rel="stylesheet" href="../CSS/header.css">
+    <link rel="stylesheet" href="../CSS/reservation-form.css">
+    <link rel="stylesheet" href="../CSS/footer.css">
+</head>
+    <body>
+        <main class="flex a_center column j_around">
             <h1>Formulaire de réservation de salle</h1>
 
-            <form class="" action="" method="post">
-
-              <label for="">Titres
-              <input type="text" name="name" required value="<?= isset($data['name']) ? ($data['name']) : ''; ?>">
-                  <?php if (isset($errors['name'])): ?>
-                  <?= $errors['name']; ?>
-                  <?php endif; ?>
-              </label>
-
-              <label for="">Date
-              <input type="date" name="date" required value="<?= isset($data['date']) ? ($data['date']) : ''; ?>">
-
-                  <?php if (isset($errors['Date'])): ?>
-                      <?= $errors['Date']; ?>
-                  <?php endif; ?>
-              </label>
+            <form class="flex column a_center j_around" action="" method="post">
 
 
-              <div class="heure">
-                <label for="">Heure de Début
-                <input type="time" name="start" value="<?= isset($data['start']) ? ($data['start']) : ''; ?>" required placeholder="HH:MM">
-                    <?php if (isset($errors['start'])): ?>
-                        <?= $errors['start']; ?>
-                    <?php endif; ?>
-                </label>
+              <section class="flex j_around a_center">
 
-                <label for="">Heure de Fin
-                <input type="time" name="end" value="<?= isset($data['end']) ? ($data['end']) : ''; ?>" required placeholder="HH:MM">
-                </label>
-              </div>
+                <article class="flex column a_center">
+                  <label for="">Titres</label>
+                  <input type="text" name="name" required value="<?= isset($data['name']) ? ($data['name']) : ''; ?>">
 
-              <label for="">Description
+                      <?php if (isset($errors['name'])): ?>
+                      <?= $errors['name']; ?>
+                      <?php endif; ?>
+                </article>
+
+
+                <article class="flex column a_center">
+                  <label for="">Date</label>
+                  <input type="date" name="date" required value="<?= isset($data['date']) ? ($data['date']) : ''; ?>">
+
+                      <?php if (isset($errors['Date'])): ?>
+                          <?= $errors['Date']; ?>
+                      <?php endif; ?>
+                </article>
+              </section>
+
+
+
+
+
+              <section class="heure flex j_around a_center">
+
+                <article class="flex column a_center">
+                  <label for="">Heure de Début :</label>
+                  <input type="time" name="start" value="<?= isset($data['start']) ? ($data['start']) : ''; ?>" required placeholder="HH:MM">
+
+                      <?php if (isset($errors['start'])): ?>
+                          <?= $errors['start']; ?>
+                      <?php endif; ?>
+                </article>
+
+
+                <article class="flex column a_center">
+                  <label for="">Heure de Fin :</label>
+                  <input type="time" name="end" value="<?= isset($data['end']) ? ($data['end']) : ''; ?>" required placeholder="HH:MM">
+                </article>
+              </section>
+
+              <label for="">Description</label>
               <textarea name="description" id="description" rows="8" cols="80"><?= isset($data['description']) ? ($data['description']) : ''; ?></textarea>
-              </label>
+
 
 
               <button type="submit" name="Send">Ajouter l'evenement</button>
