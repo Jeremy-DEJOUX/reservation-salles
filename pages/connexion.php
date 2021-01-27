@@ -28,6 +28,7 @@ $path_profil = "profl.php";
     <meta charset="UTF-8">
     <title>Connexion</title>
     <link rel="stylesheet" href="../CSS/header.css">
+    <link rel="stylesheet" href="../CSS/connexion.css">
     <link rel="stylesheet" href="../CSS/footer.css">
 </head>
 <body>
@@ -42,16 +43,14 @@ $path_profil = "profl.php";
 
 
         <form action="connexion.php" method="post" id="connexion_formulaire" class="flex a_center column j_around">
-            <section class="flex column a_center">
-                <label for="login_user">Login :
+            <section class="flex column a_center j_center">
+                <label for="login_user">Login :</label>
                 <input type="text" name="login_user">
-                </label>
             </section>
 
-             <section class="flex column a_center">
-                    <label for="password_user">Password :
+             <section class="flex column a_center j_center">
+                    <label for="password_user">Password :</label>
                     <input type="password" name="password_user">
-                    </label>
             </section>
 
             <button type="submit" name="submit">Connexion</button>
