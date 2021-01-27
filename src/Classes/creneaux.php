@@ -56,23 +56,23 @@
        */
       public function getEventsBetweenByDayTime(DateTime $start, DateTime $end): array {
           $Events = $this->getEventsBetween($start, $end);
-          $day = [];
+          $days = [];
           foreach ($Events as $event) {
-              $day[$event['debut']] = $event;
+              $days[$event['debut']] = $event;
 
               $diff = new Events;
               $length = $diff->timeLength($event['debut'], $event['fin']);
 
-              $day[$event['debut']]['length'] = $length;
+              $days[$event['debut']]['length'] = $length;
               $dateStart = new DateTime($event['debut']);
               $dateDay = $dateStart->format('N');
               $timeHour = $dateStart->format('G');
               $case = ($timeHour - 7) . '-' . $dateDay;
-              $day[$event['debut']]['case'] = $case;
+              $days[$event['debut']]['case'] = $case;
               $lengthEvents[$case] = $length;
 
           }
-          return $day;
+          return $days;
       }
 
       /**

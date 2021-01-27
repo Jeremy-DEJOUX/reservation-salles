@@ -33,11 +33,12 @@
             $this->currentDay = intval($makeDate->format('N'));
 
             // Savoir si c'est lundi
-            if ($this->currentDay === 1) {
+            if ($this->currentDay === 01) {
                 $this->mondaysDate = $day;
                 $this->currentIsMonday = TRUE;
-            } else {
-                $getMondayDate = $makeDate->modify('last Monday');
+            }
+            else {
+                $getMondayDate = $makeDate->modify('last monday');
                 $this->mondaysDate = intval($getMondayDate->format('j'));
                 $this->currentIsMonday = FALSE;
             }
@@ -74,7 +75,7 @@
         public function nextWeek(): Week {
             $tempDate = new DateTimeImmutable($this->currentDate);
             $dayName = $tempDate->format('l');
-            $tempDate2 = $tempDate->modify('next ' . $dayName);
+            $tempDate2 = $tempDate->modify('next monday');
 
             $day = $tempDate2->format('j');
             $month = $tempDate2->format('n');
@@ -90,7 +91,7 @@
         public function previousWeek(): Week {
             $tempDate = new DateTimeImmutable($this->currentDate);
             $dayName = $tempDate->format('l');
-            $tempDate2 = $tempDate->modify('previous ' . $dayName);
+            $tempDate2 = $tempDate->modify('previous monday');
 
             $day = $tempDate2->format('j');
             $month = $tempDate2->format('n');
