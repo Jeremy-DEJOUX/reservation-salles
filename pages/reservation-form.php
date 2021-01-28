@@ -35,7 +35,6 @@
                 ':fin'=> $dateEnd,
                 ':id_user'=> $_SESSION['id']
             ]);
-            var_dump($errors);
         }
 
     }

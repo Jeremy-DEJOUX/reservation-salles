@@ -14,7 +14,7 @@ $path_profil = "pages/profil.php";
     <meta charset="utf-8">
     <link rel="stylesheet" href="CSS/header.css">
     <link rel="stylesheet" href="CSS/index.css">
-    <title>Rowingcork</title>
+    <title>Growingcork</title>
   </head>
   <body>
     <?php require_once('pages/header.php'); ?>

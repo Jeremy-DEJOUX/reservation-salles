@@ -58,8 +58,24 @@ class Validator
                 $this->errors[$startField] = "Le temps doit de début ne peux pas être supèrieur au temps de fin";
                 return false;
             }
+            elseif ($start->format('H') < 8 || $end->format('H') > 18) {
+              $this->errors[$startField] = "On ne peut réserver que entre 8h00 et 18h00";
+              return false;
+            }
             return true;
         }
         return false;
     }
+
+
+
+
+  public function Week_End(string $field): bool{
+    $date = date('N', strtotime($this->data[$field]));
+    if ($date == '7' || $date == '6') {
+      $this->errors[$field] = "On ne peut pas reserver pendant les Week-Ends";
+      return false;
+    }
+    return true;
+  }
 }

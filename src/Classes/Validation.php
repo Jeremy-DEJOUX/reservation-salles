@@ -9,6 +9,7 @@ class EventValidator extends Validator
         $this->validate('name', 'minLength', 3);
         $this->validate('date', 'date');
         $this->validate('start', 'beforeTime', 'end');
+        $this->validate('date', 'Week_End');
         return $this->errors;
     }
 
