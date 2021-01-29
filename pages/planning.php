@@ -92,7 +92,7 @@ foreach ($events as $k => $event) {
                             echo "<a href=\"reservation.php?id=" . $currentEvent['id'] . '">détails...</a>';
                             echo '</td>';
 
-                            // logical part
+                            // logical part pour les Rowspan
                             $tempY = $y + 1;
                             while ($cellLength > 1) {
                                 $tableCell[$tempY . '-' . $x] = FALSE;
