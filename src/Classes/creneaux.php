@@ -12,8 +12,6 @@
       }
 
       public function getEventsBetween(DateTime $start, DateTime $end): array {
-//          $sql = "SELECT * FROM reservations
-//                  WHERE debut BETWEEN '{$start->format('Y-m-d')}' AND '{$end->format('Y-m-d')}'";
           $sql = "SELECT
                     reservations.id, reservations.titre, reservations.debut, reservations.fin, utilisateurs.login
                     FROM reservations JOIN utilisateurs
